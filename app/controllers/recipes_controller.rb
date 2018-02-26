@@ -6,26 +6,21 @@ class RecipesController < ApplicationController
 
   def new
     @recipe = Recipe.new
+    @recipe_types = RecipeType.all
   end
 
   def create
-
-    recipe_params = params.require(:recipe).permit(:title, :recipe_type, :cuisine_id,
+    recipe_params = params.require(:recipe).permit(:title, :recipe_type_id, :cuisine_id,
                                                   :cook_time, :ingredients, :method,
                                                   :difficulty)
 
     @recipe = Recipe.new(recipe_params)
-
-    #@recipe.title = params[:recipe][:title]
-    #@recipe.recipe_type = params[:recipe][:recipe_type]
-    #@recipe.cuisine = params[:recipe][:cuisine]
-    #@recipe.difficulty = params[:recipe][:difficulty]
-    #@recipe.cook_time = params[:recipe][:cook_time]
-    #@recipe.ingredients = params[:recipe][:ingredients]
-    #@recipe.method = params[:recipe][:method]
-
-    @recipe.save
-
-    redirect_to recipe_path(@recipe.id)
+    if @recipe.save
+      redirect_to recipe_path(@recipe.id)
+    else
+      @recipe_types = RecipeType.all
+      flash[:error] = 'Você deve informar todos os dados da receita'
+      redirect_to new_recipe_path
+    end
   end
 end
