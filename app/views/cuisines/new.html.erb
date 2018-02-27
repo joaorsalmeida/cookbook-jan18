@@ -1,5 +1,10 @@
 <h1>Nova Cozinha</h1>
 <%= flash[:alert] %>
+<ul>
+  <% @cuisine.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+</ul>
 <%= form_for(@cuisine) do |f| %>
   <div>
     <%= f.label :name, 'Nome' %>
