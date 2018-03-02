@@ -1,6 +1,12 @@
 <h1>CookBook</h1>
 <p>Bem-vindo ao maior livro de receitas online</p>
 
+<%= form_tag(search_recipes_path, method: :get) do %>
+  <%= text_field_tag(:banana) %>
+  <%= label_tag :banana, 'Busca' %>
+  <%= submit_tag 'Buscar' %>
+<% end %>
+
 <%= link_to 'Enviar uma receita', new_recipe_path %>
 
 <% @recipes.each do |r| %>
